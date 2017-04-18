@@ -33,12 +33,24 @@ def circle(x, y, radius):
         glVertex2f(x+(cos(angle)*radius),y+(sin(angle)*radius))
     glEnd()
 
+def draw_circle_filled(x, y, rad, n, a, b, c):
+    posx, posy = x, y
+    sides = 32
+    radius = rad
+    glColor3f(a, b, c)
+    for i in range(n):
+        cosine = radius * cos(i * 2 * pi / sides) + posx
+        sine = radius * sin(i * 2 * pi / sides) + posy
+        glVertex2f(cosine, sine)
+
+
 def draw_circle_custom(x, y, rad, n):
     posx, posy = x, y
     sides = 32
     radius = rad
     glBegin(GL_POLYGON)
     for i in range(n):
+        glColor3f(i / 50.0, i / 10.0, 0)
         cosine = radius * cos(i * 2 * pi / sides) + posx
         sine = radius * sin(i * 2 * pi / sides) + posy
         glVertex2f(cosine, sine)
@@ -54,11 +66,11 @@ def refresh2d(w, h):
 
 def draw_background():
     glBegin(GL_QUADS)
-    glColor3f(0.7, 0.8, 1.0)
+    glColor3f(0.2, 0.8, 1.0)
     glVertex2f(width, height)
     glVertex2f(0, height)
 
-    glColor3f(0.2, 0.8, 1.0)
+    glColor3f(0.7, 0.8, 1.0)
     glVertex2f(0, 0)
     glVertex2f(width, 0)
     glEnd()
@@ -142,6 +154,21 @@ def draw_rainbow(x, y, w, step):
         else:
             step = step + 1
 
+def draw_rainbow2(x, y):
+    rad = 500
+    n = 18
+    glBegin(GL_POLYGON)
+    draw_circle_filled(x, y, rad, n, 1, 0, 0)
+    draw_circle_filled(x, y-10, rad, n, 1, 0.6, 0)
+    draw_circle_filled(x, y-20, rad, n, 1, 1, 0)
+    draw_circle_filled(x, y-30, rad, n, 0.2, 1, 0)
+    draw_circle_filled(x, y-40, rad, n, 0, 0.6, 1)
+    draw_circle_filled(x, y-50, rad, n, 0.4, 0.2, 1)
+    glEnd()
+
+    glColor3f(0.2, 0.8, 1)
+    circle(x, y-60, rad)
+
 def draw():  # ondraw is called all the time
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # clear the screen
     glLoadIdentity()  # reset position
@@ -150,14 +177,13 @@ def draw():  # ondraw is called all the time
     # background
     draw_background()
 
-    draw_rainbow(0, 300, 10, 50)
+#    draw_rainbow(0, 300, 10, 50)
+    draw_rainbow2(300, 0)
 
     # Gunung 1
-    glColor3f(0.0, 0.6, 0.0)
     draw_circle_custom(200, -100, 300, 18)
 
     # Gunung 2
-    glColor3f(0.0, 0.8, 0.0)
     draw_circle_custom(600, -100, 300, 18)
 
     # pohon 1
