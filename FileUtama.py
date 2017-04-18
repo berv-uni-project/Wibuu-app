@@ -45,13 +45,26 @@ def refresh2d(width, height):
     glMatrixMode (GL_MODELVIEW)
     glLoadIdentity()
 
+def draw_background():
+    glBegin(GL_QUADS)
+    glColor3f(0.6, 0.8, 1.0)
+    glVertex2f(0, 0)
+    glVertex2f(width, 0)
+
+    glColor3f(0.0, 0.8, 1.0)
+    glVertex2f(width, height)
+    glVertex2f(0, height)
+    glEnd()
+
+
 def draw():  # ondraw is called all the time
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # clear the screen
     glLoadIdentity()  # reset position
     refresh2d(width, height)  # set mode to 2d
 
-    glColor3f(0.0, 0.0, 1.0)  # set color to blue
-    draw_rect(10, 10, 200, 100)  # rect at (10, 10) with width 200, height 100
+    #glColor3f(0.0, 0.0, 1.0)  # set color to blue
+    #draw_rect(0, 0, width, height)  # rect at (10, 10) with width 200, height 100
+    draw_background()
 
     draw_circle(300, 300, 50) # draw circle at (300,300) with radius 50
 
