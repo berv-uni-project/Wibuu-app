@@ -41,11 +41,11 @@ def draw_circle_custom(x, y, rad, n):
     glEnd()
 
 
-def refresh2d(width, height):
-    glViewport(0, 0, width, height)
+def refresh2d(w, h):
+    glViewport(0, 0, w, h)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    glOrtho(0.0, width, 0.0, height, 0.0, 1.0)
+    glOrtho(0.0, w, 0.0, h, 0.0, 1.0)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
@@ -61,39 +61,39 @@ def draw_background():
     glVertex2f(width, 0)
     glEnd()
 
-def colour_tree(x, y):
+def colour_tree(x, y, scale):
 
     glBegin(GL_POLYGON)
     glColor3f(0.4, 0.19, 0.05)
 
-    glVertex2f(x + 175, y + 75)
-    glVertex2f(x + 100, y + 75)
+    glVertex2f((x + 175) * scale , (y + 75) * scale)
+    glVertex2f((x + 100) * scale, (y + 75) * scale)
     glColor3f(0.4, 0.50, 0.05)
-    glVertex2f(x + 100, y + 250)
-    glVertex2f(x + 175, y + 250)
+    glVertex2f((x + 100) * scale, (y + 250) * scale)
+    glVertex2f((x + 175) * scale, (y + 250) * scale)
     glEnd()
 
     glBegin(GL_POLYGON)
     glColor3f(0.0, 0.3, 0.0)
-    glVertex2f(x + 100, y + 250)
-    glVertex2f(x + 0, y + 250)
-    glVertex2f(x + 75, y + 350)
+    glVertex2f((x + 100) * scale, (y + 250) * scale)
+    glVertex2f((x + 0) * scale, (y + 250) * scale)
+    glVertex2f((x + 75) * scale, (y + 350) * scale)
 
     glColor3f(0.0, 0.5, 0.0)
-    glVertex2f(x + 25, y + 350)
-    glVertex2f(x + 100, y + 425)
-    glVertex2f(x + 50, y + 425)
+    glVertex2f((x + 25) * scale, (y + 350) * scale)
+    glVertex2f((x + 100) * scale, (y + 425) * scale)
+    glVertex2f((x + 50) * scale, (y + 425) * scale)
 
     glColor3f(0.0, 0.7, 0.0)
-    glVertex2f(x + 140, y + 500)
-    glVertex2f(x + 225, y + 425)
-    glVertex2f(x + 175, y + 425)
+    glVertex2f((x + 140) * scale, (y + 500) * scale)
+    glVertex2f((x + 225) * scale, (y + 425) * scale)
+    glVertex2f((x + 175) * scale, (y + 425) * scale)
 
     glColor3f(0.0, 0.9, 0.0)
-    glVertex2f(x + 250, y + 350)
-    glVertex2f(x + 200, y + 350)
-    glVertex2f(x + 275, y + 250)
-    glVertex2f(x + 175, y + 250)
+    glVertex2f((x + 250) * scale, (y + 350) * scale)
+    glVertex2f((x + 200) * scale, (y + 350) * scale)
+    glVertex2f((x + 275) * scale, (y + 250) * scale)
+    glVertex2f((x + 175) * scale, (y + 250) * scale)
     glEnd()
 
 def draw_tree(x, y):
@@ -119,7 +119,7 @@ def draw_tree(x, y):
     glVertex2f(x + 275, y + 250)
     glVertex2f(x + 175, y + 250)
     glEnd()
-    colour_tree(x,y)
+    colour_tree(x,y, 0.4)
 
 def draw():  # ondraw is called all the time
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # clear the screen
@@ -130,8 +130,8 @@ def draw():  # ondraw is called all the time
     # draw_rect(0, 0, width, height)  # rect at (10, 10) with width 200, height 100
     draw_background()
 
-    colour_tree(5, 0)
-    colour_tree(500, 0)
+    colour_tree(50, 0, 0.6)
+    colour_tree(800, 0, 0.7)
 
     draw_circle(width * 0.5, height * 0.9, 50)  # draw circle at (300,300) with radius 50
 
