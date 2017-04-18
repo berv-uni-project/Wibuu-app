@@ -26,6 +26,13 @@ def draw_circle(x, y, rad):
         glVertex2f(cosine, sine)
     glEnd()
 
+def circle(x, y, radius):
+    glBegin(GL_POLYGON)
+    for i in range(100):
+        angle = i*2*(pi/100)
+        glVertex2f(x+(cos(angle)*radius),y+(sin(angle)*radius))
+    glEnd()
+
 def draw_circle_custom(x, y, rad, n):
     posx, posy = x, y
     sides = 32
@@ -55,6 +62,13 @@ def draw_background():
     glVertex2f(0, 0)
     glVertex2f(width, 0)
     glEnd()
+
+def draw_cloud(x, y, size):
+    glColor3f(1.0, 1.0, 1.0)
+    circle(x, y, size)
+    circle(x + 25, y - 10, size + 10)
+    circle(x + 60, y - 7, size + 20)
+    circle(x + 100, y - 10, size + 10)
 
 def colour_tree(x, y, scale):
     glBegin(GL_POLYGON)
@@ -114,6 +128,9 @@ def draw():  # ondraw is called all the time
 
     # matahari
     draw_circle(width * 0.5, height * 0.9, 50)  # draw circle at (300,300) with radius 50
+
+    draw_cloud(100,450,30)
+    draw_cloud(600, 450, 30)
 
     glutSwapBuffers()  # important for double buffering
 
