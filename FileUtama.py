@@ -1,5 +1,6 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
+from math import *
 from OpenGL.GLU import *
 
 window = 0  # glut window number
@@ -11,8 +12,29 @@ def draw_rect(x, y, width, height):
     glVertex2f(x + width, y)                           # bottom right point
     glVertex2f(x + width, y + height)                  # top right point
     glVertex2f(x, y + height)                          # top left point
-    glVertex2f
     glEnd()                                            # done drawing a rectangle
+
+def draw_circle(x, y, rad):
+    posx, posy = x,y
+    sides = 32
+    radius = rad
+    glBegin(GL_POLYGON)
+    for i in range(50):
+        cosine = radius * cos(i*2*pi/sides) + posx
+        sine = radius * sin(i*2*pi/sides) + posy
+        glVertex2f(cosine,sine)
+    glEnd()
+
+def draw_circle_custom(x, y, rad, n):
+    posx, posy = x, y
+    sides = 32
+    radius = rad
+    glBegin(GL_POLYGON)
+    for i in range(n):
+        cosine = radius * cos(i * 2 * pi / sides) + posx
+        sine = radius * sin(i * 2 * pi / sides) + posy
+        glVertex2f(cosine, sine)
+    glEnd()
 
 def refresh2d(width, height):
     glViewport(0, 0, width, height)
@@ -29,7 +51,7 @@ def draw():  # ondraw is called all the time
 
     glColor3f(0.0, 0.0, 1.0)  # set color to blue
     draw_rect(10, 10, 200, 100)  # rect at (10, 10) with width 200, height 100
-
+    draw_circle(400, 400, 100)
     glutSwapBuffers()  # important for double buffering
 
 
@@ -38,7 +60,7 @@ glutInit()  # initialize glut
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
 glutInitWindowSize(width, height)  # set window size
 glutInitWindowPosition(0, 0)  # set window position
-window = glutCreateWindow("Pemandangan")  # create window with ti`tle
+window = glutCreateWindow(b'Pemandangan')  # create window with ti`tle
 glutDisplayFunc(draw)  # set draw function callback
 glutIdleFunc(draw)  # draw all the time
 glutMainLoop()  # start everything
