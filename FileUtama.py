@@ -37,8 +37,8 @@ def draw_circle_filled(x, y, rad, n, a, b, c):
     posx, posy = x, y
     sides = 32
     radius = rad
-    glColor3f(a, b, c)
     for i in range(n):
+        glColor3f(a + 0.02 * i, b + 0.02 * i, c + 0.02 * i)
         cosine = radius * cos(i * 2 * pi / sides) + posx
         sine = radius * sin(i * 2 * pi / sides) + posy
         glVertex2f(cosine, sine)
