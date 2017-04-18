@@ -38,7 +38,7 @@ glutInit()  # initialize glut
 glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH)
 glutInitWindowSize(width, height)  # set window size
 glutInitWindowPosition(0, 0)  # set window position
-window = glutCreateWindow("Pemandangan")  # create window with title
+window = glutCreateWindow("Pemandangan")  # create window with ti`tle
 glutDisplayFunc(draw)  # set draw function callback
 glutIdleFunc(draw)  # draw all the time
 glutMainLoop()  # start everything
