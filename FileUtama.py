@@ -19,7 +19,8 @@ def draw_circle(x, y, rad):
     sides = 32
     radius = rad
     glBegin(GL_POLYGON)
-    for i in range(50):
+    for i in range(100):
+        glColor3f(1.0, i/150.0, 0)  # set color to white
         cosine = radius * cos(i*2*pi/sides) + posx
         sine = radius * sin(i*2*pi/sides) + posy
         glVertex2f(cosine,sine)
@@ -51,7 +52,9 @@ def draw():  # ondraw is called all the time
 
     glColor3f(0.0, 0.0, 1.0)  # set color to blue
     draw_rect(10, 10, 200, 100)  # rect at (10, 10) with width 200, height 100
-    draw_circle(400, 400, 100)
+
+    draw_circle(300, 300, 50) # draw circle at (300,300) with radius 50
+
     glutSwapBuffers()  # important for double buffering
 
 
