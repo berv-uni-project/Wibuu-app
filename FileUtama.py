@@ -104,6 +104,44 @@ def colour_tree(x, y, scale):
     glVertex2f((x + 175) * scale, (y + 250) * scale)
     glEnd()
 
+def draw_rainbow(x, y, w, step):
+    dx, dy = x, y
+    up = 0.2
+    for i in range(100):
+        glBegin(GL_QUAD_STRIP)
+        glColor3f(1, 0, 0) # Red
+        glVertex2f(dx, dy - step)
+        glVertex2f(dx + w, dy - step - up)
+
+        glColor3f(1, 0.6, 0) # Orange
+        glVertex2f(dx, dy - step * 1.1)
+        glVertex2f(dx + w, dy - step * 1.1 - up)
+
+        glColor3f(1, 1, 0) # Yellow
+        glVertex2f(dx, dy - step * 1.2)
+        glVertex2f(dx + w, dy - step * 1.2 - up)
+
+        glColor3f(0.2, 1, 0) # Green
+        glVertex2f(dx, dy - step * 1.3)
+        glVertex2f(dx + w, dy - step * 1.4 - up)
+
+        glColor3f(0, 0.6, 1) # Blue
+        glVertex2f(dx, dy - step * 1.5)
+        glVertex2f(dx + w, dy - step * 1.5 - up)
+
+        glColor3f(0.4, 0.2, 1) # Purple
+        glVertex2f(dx, dy - step * 1.6)
+        glVertex2f(dx + w, dy - step * 1.6 - up)
+
+        glEnd()
+
+        dx = dx + w
+        dy = dy + 0.01 * sin(i * 3.14 / 5.0)
+        if (dx < width/2):
+            step = step - 1
+        else:
+            step = step + 1
+
 def draw():  # ondraw is called all the time
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # clear the screen
     glLoadIdentity()  # reset position
@@ -111,6 +149,8 @@ def draw():  # ondraw is called all the time
 
     # background
     draw_background()
+
+    draw_rainbow(0, 300, 10, 50)
 
     # Gunung 1
     glColor3f(0.0, 0.6, 0.0)
