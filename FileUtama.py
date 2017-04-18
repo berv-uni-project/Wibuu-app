@@ -130,6 +130,11 @@ def draw():  # ondraw is called all the time
     # draw_rect(0, 0, width, height)  # rect at (10, 10) with width 200, height 100
     draw_background()
 
+    glColor3f(0.0, 0.6, 0.0)
+    draw_circle_custom(200, -100, 300, 18)
+    glColor3f(0.0, 0.8, 0.0)
+    draw_circle_custom(600, -100, 300, 18)
+
     colour_tree(50, 0, 0.6)
     colour_tree(800, 0, 0.7)
 
