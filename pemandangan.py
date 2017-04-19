@@ -35,10 +35,12 @@ def circle(x, y, radius):
 
 def draw_circle_filled(x, y, rad, n, a, b, c):
     posx, posy = x, y
-    sides = 32
+    sides = 50
     radius = rad
+    #glColor4f(a + 0.035, b + 0.025, c + 0.015, 0.4)
     for i in range(n):
-        glColor3f(a + 0.02 * i, b + 0.02 * i, c + 0.02 * i)
+        # glColor3f(a + 0.02 * i, b + 0.02 * i, c + 0.02 * i)
+        glColor3f(a + 0.035 * i, b + 0.025 * i, c + 0.015 * i)
         cosine = radius * cos(i * 2 * pi / sides) + posx
         sine = radius * sin(i * 2 * pi / sides) + posy
         glVertex2f(cosine, sine)
@@ -118,8 +120,9 @@ def colour_tree(x, y, scale):
 
 def draw_rainbow(x, y, w, step):
     dx, dy = x, y
-    up = 0.2
-    for i in range(100):
+    up = 0
+    n = 1000
+    for i in range(n):
         glBegin(GL_QUAD_STRIP)
         glColor3f(1, 0, 0) # Red
         glVertex2f(dx, dy - step)
@@ -149,14 +152,14 @@ def draw_rainbow(x, y, w, step):
 
         dx = dx + w
         dy = dy + 0.01 * sin(i * 3.14 / 5.0)
-        if (dx < width/2):
-            step = step - 1
+        if (dx < width / 2):
+            step = step - 0.045
         else:
-            step = step + 1
+            step = step + 0.045
 
 def draw_rainbow2(x, y):
     rad = 500
-    n = 18
+    n = 16
     glBegin(GL_POLYGON)
     draw_circle_filled(x, y, rad, n, 1, 0, 0)
     draw_circle_filled(x, y-10, rad, n, 1, 0.6, 0)
@@ -166,7 +169,7 @@ def draw_rainbow2(x, y):
     draw_circle_filled(x, y-50, rad, n, 0.4, 0.2, 1)
     glEnd()
 
-    glColor3f(0.2, 0.8, 1)
+    glColor3f(0.2, 0.8, 1) # background
     circle(x, y-60, rad)
 
 def draw():  # ondraw is called all the time
@@ -177,8 +180,8 @@ def draw():  # ondraw is called all the time
     # background
     draw_background()
 
-#    draw_rainbow(0, 300, 10, 50)
-    draw_rainbow2(300, 0)
+    draw_rainbow(100, 520, 0.5, 50)
+    #draw_rainbow2(300, 0)
 
     # Gunung 1
     draw_circle_custom(200, -100, 300, 18)
