@@ -1,118 +1,64 @@
-import pygame
-from pygame.locals import *
+import numpy as np
+from glumpy import app, gloo, gl, data
+from os.path import abspath
 
-from OpenGL.GL import *
-from OpenGL.GLU import *
-import OpenGL.GL.shaders
+vertex = """
+uniform mat4   u_model;         // Model matrix
+uniform mat4   u_view;          // View matrix
+uniform mat4   u_projection;    // Projection matrix
+attribute vec3 a_position;      // Vertex position
+attribute vec3 a_texcoord;      // Vertex texture coordinates
+varying vec3   v_texcoord;      // Interpolated fragment texture coordinates (out)
+void main()
+{
+    // Assign varying variables
+    v_texcoord  = a_texcoord;
+    // Final position
+    gl_Position = u_projection * u_view * u_model * vec4(a_position,1.0);
+}
+"""
 
-verticies = (
-    (1, -1, -1),
-    (1, 1, -1),
-    (-1, 1, -1),
-    (-1, -1, -1),
-    (1, -1, 1),
-    (1, 1, 1),
-    (-1, -1, 1),
-    (-1, 1, 1)
-    )
-
-edges = (
-    (0,1),
-    (0,3),
-    (0,4),
-    (2,1),
-    (2,3),
-    (2,7),
-    (6,3),
-    (6,4),
-    (6,7),
-    (5,1),
-    (5,4),
-    (5,7)
-    )
-
-colors = (
-    (1,0,0),
-    (0,1,0),
-    (0,0,1),
-    (0,1,0),
-    (1,1,1),
-    (0,1,1),
-    (1,0,0),
-    (0,1,0),
-    (0,0,1),
-    (1,0,0),
-    (1,1,1),
-    (0,1,1),
-    )
-
-surfaces = (
-    (0,1,2,3),
-    (3,2,7,6),
-    (6,7,5,4),
-    (4,5,1,0),
-    (1,5,7,2),
-    (4,0,3,6)
-    )
-
-def Cube():
-    glBegin(GL_QUADS)
-    for surface in surfaces:
-        x = 0
-        for vertex in surface:
-            x+=1
-            glColor3fv(colors[x])
-            glVertex3fv(verticies[vertex])
-    glEnd()
-
-    glBegin(GL_LINES)
-    for edge in edges:
-        for vertex in edge:
-            glVertex3fv(verticies[vertex])
-    glEnd()
-
-
-def main():
-    pygame.init()
-    display = (800,600)
-    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
-
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-
-    glTranslatef(0.0,0.0, -5)
-
-    vertex_shader = """
-    #version 330
-    in vec4 position;
-    
-    void main ()
-    {
-        gl_position = position;
-    }
-    """
-
-    fragment_shader = """
-    #version 330
+fragment = """
+    uniform samplerCube texture;
+    varying vec3 v_texcoord;
     void main()
     {
-        gl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+        gl_FragColor = textureCube(texture, v_texcoord);
     }
-    """
-
-    shader = OpenGL.GL.shaders.compileProgram(OpenGL.GL.shaders.compileShader(vertex_shader, GL_VERTEX_SHADER),
-                                              OpenGL.GL.shaders.compileShader(vertex_shader, GL_VERTEX_SHADER))
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        glRotatef(1, 3, 1, 1)
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        Cube()
-        pygame.display.flip()
-        pygame.time.wait(10)
+"""
 
 
-main()
+window = app.Window(width=1024, height=1024)
+
+@window.event
+def on_draw(dt):
+    window.clear()
+    program.draw(gl.GL_TRIANGLES, indices)
+
+@window.event
+def on_init():
+    gl.glEnable(gl.GL_DEPTH_TEST)
+
+vertices = np.array([[+1,+1,+1], [-1,+1,+1], [-1,-1,+1], [+1,-1,+1],
+                     [+1,-1,-1], [+1,+1,-1], [-1,+1,-1], [-1,-1,-1]])
+texcoords = np.array([[+1,+1,+1], [-1,+1,+1], [-1,-1,+1], [+1,-1,+1],
+                     [+1,-1,-1], [+1,+1,-1], [-1,+1,-1], [-1,-1,-1]])
+faces = np.array([vertices[i] for i in [0,1,2,3, 0,3,4,5, 0,5,6,1,
+                                        6,7,2,1, 7,4,3,2, 4,7,6,5]])
+indices = np.resize(np.array([0,1,2,0,2,3], dtype=np.uint32), 36)
+indices += np.repeat(4 * np.arange(6, dtype=np.uint32), 6)
+indices = indices.view(gloo.IndexBuffer)
+texture = np.zeros((6,1024,1024,3),dtype=np.float32).view(gloo.TextureCube)
+texture.interpolation = gl.GL_LINEAR
+program = gloo.Program(vertex, fragment, count=24)
+program['position'] = faces
+program['texcoord'] = faces
+program['texture'] = texture
+
+texture[2] = data.get(abspath('Front_t2.png'))/255.
+texture[3] = data.get(abspath('Back_t2.png'))/255.
+texture[0] = data.get(abspath('Top_t2.png'))/255.
+texture[1] = data.get(abspath('Bottom_t2.png'))/255.
+texture[4] = data.get(abspath('Left_t2.png'))/255.
+texture[5] = data.get(abspath('Right_t2.png'))/255.
+app.run()
