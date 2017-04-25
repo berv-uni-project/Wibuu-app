@@ -22,7 +22,7 @@ def cube():
     faces_n = [0, 0, 0, 0,  1, 1, 1, 1,   2, 2, 2, 2,
                3, 3, 3, 3,  4, 4, 4, 4,   5, 5, 5, 5]
     faces_t = [0, 1, 2, 3,  0, 1, 2, 3,   0, 1, 2, 3,
-               3, 2, 1, 0,  0, 1, 2, 3,   0, 1, 2, 3]
+               0, 1, 2, 3,  0, 1, 2, 3,   0, 1, 2, 3]
 
     vertices = np.zeros(24, vtype)
     vertices['a_position'] = p[faces_p]
@@ -99,6 +99,7 @@ texture[2] = data.get(abspath("Left_t2.png"))/255.
 texture[3] = data.get(abspath("Right_t2.png"))/255.
 texture[0] = data.get(abspath("Front_t2.png"))/255.
 texture[1] = data.get(abspath("Back_t2.png"))/255.
+texture[4] = data.get(abspath("Top_t2.png"))/255.
 texture[4] = data.get(abspath("Top_t2.png"))/255.
 texture[5] = data.get(abspath("Bottom_t2.png"))/255.
 
