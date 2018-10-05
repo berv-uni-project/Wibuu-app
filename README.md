@@ -1,5 +1,7 @@
 # OpenGL Assignment
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/115a6b62e53f438081122672c3a8925e)](https://app.codacy.com/app/berviantoleo/Wibuu-app?utm_source=github.com&utm_medium=referral&utm_content=berv-uni-project/Wibuu-app&utm_campaign=Badge_Grade_Settings)
+
 ## Pemandangan
 
 ### Cara Menggunakan
