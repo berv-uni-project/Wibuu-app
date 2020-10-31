@@ -1,4 +1,4 @@
-image==1.5.32
+image==1.5.33
 numpy==1.19.2
 PyOpenGL==3.1.5
 PyOpenGL-accelerate==3.1.5
